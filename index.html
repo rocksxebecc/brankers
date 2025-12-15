@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maison Alder — Timeless Clothing</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ivory: #F5F3EF;
+      --beige: #E7E1D8;
+      --taupe: #CFC6BA;
+      --charcoal: #2E2E2E;
+      --olive: #6B705C;
+      --gray: #7A7A7A;
+      --toast-bg: #2E2E2E;
+      --toast-text: #F5F3EF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--ivory);
+      color: var(--charcoal);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 24px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--taupe);
+      position: sticky;
+      top: 0;
+      background-color: rgba(245, 243, 239, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--charcoal);
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: var(--olive);
+    }
+
+    .cart-pill {
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--taupe);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: default;
+      background-color: #ffffffa0;
+    }
+
+    .cart-pill span {
+      font-weight: 500;
+    }
+
+    .hero {
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+      background-color: var(--beige);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: var(--gray);
+    }
+
+    .section {
+      padding: 80px 64px;
+    }
+
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+    }
+
+    .card {
+      background-color: white;
+      padding: 24px;
+      border: 1px solid var(--taupe);
+      text-align: center;
+      position: relative;
+    }
+
+    .card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      margin-bottom: 16px;
+    }
+
+    .card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: var(--gray);
+      margin: 8px 0 16px;
+    }
+
+    .card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-main,
+    .btn-outline {
+      padding: 10px 20px;
+      border: none;
+      background-color: var(--charcoal);
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .btn-main:hover {
+      background-color: var(--olive);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--charcoal);
+      border: 1px solid var(--charcoal);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--charcoal);
+      color: white;
+    }
+
+    .add-count {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    .about {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+      color: var(--gray);
+    }
+
+    .payment {
+      text-align: center;
+    }
+
+    .payment-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .qr-box {
+      background-color: white;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--taupe);
+      display: inline-block;
+      transition: opacity 0.2s ease;
+    }
+
+    .qr-box.hidden {
+      opacity: 0;
+      pointer-events: none;
+      height: 0;
+      overflow: hidden;
+      padding: 0;
+      border-width: 0;
+    }
+
+    .qr-box img {
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .payment button {
+      margin-top: 8px;
+      padding: 14px 32px;
+      font-size: 16px;
+      background-color: var(--charcoal);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .payment button:hover {
+      background-color: var(--olive);
+    }
+
+    .cart-summary {
+      padding: 40px 64px 20px;
+      border-top: 1px solid var(--taupe);
+      background-color: #f0ece6;
+    }
+
+    .cart-summary-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cart-summary h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .cart-summary p {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+
+    footer {
+      padding: 24px 64px 40px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--gray);
+      border-top: 1px solid var(--taupe);
+    }
+
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 50;
+    }
+
+    .toast {
+      min-width: 220px;
+      max-width: 280px;
+      background-color: var(--toast-bg);
+      color: var(--toast-text);
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .hero {
+        padding: 32px 16px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .section {
+        padding: 48px 20px;
+      }
+
+      .cart-summary {
+        padding: 32px 20px 16px;
+      }
+
+      .toast-container {
+        right: 10px;
+        left: 10px;
+        align-items: center;
+      }
+
+      .toast {
+        width: 100%;
+        max-width: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">MAISON ALDER</div>
+    <nav>
+      <a href="#shop">Shop</a>
+      <a href="#about">About</a>
+      <a href="#pay">Checkout</a>
+      <div class="cart-pill">
+        Cart: <span id="globalCartCount">0</span>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Timeless Pieces.<br>Quiet Luxury.</h1>
+      <p>Inspired by heritage. Designed for modern refinement.</p>
+    </div>
+  </section>
+
+  <section class="section" id="shop">
+    <h2>Signature Collection</h2>
+    <div class="products">
+
+      <!-- Original 4 products -->
+      <div class="card" data-name="Static Pulse Cami Top" data-price="1199">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/StaticPulseCamiTop2_770x_crop_center.jpg?v=1757066355" alt="Static Pulse Cami Top">
+        <h3>Static Pulse Cami Top</h3>
+        <p>₹1,499</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="Fangline Zipper Jacket" data-price="1999">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/FanglineZipperJacket27_770x_crop_center.png?v=1762413259" alt="Fangline Zipper Jacket">
+        <h3>Fangline Zipper Jacket</h3>
+        <p>₹1,999</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="INFERNO BLADE TANK" data-price="2999">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/Infernobladetank1_770x_crop_center.jpg?v=1757567266" alt="INFERNO BLADE TANK">
+        <h3>INFERNO BLADE TANK</h3>
+        <p>₹2,999</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="Paranoid Glitch Oversized T-shirt" data-price="2999">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/ParanoidGlitchOversizedT-shirt5_770x_crop_center.jpg?v=1760436925" alt="Paranoid Glitch Oversized T-shirt">
+        <h3>Paranoid Glitch Oversized T-shirt</h3>
+        <p>₹2,499</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+      <!-- New 4 products with random Bonkers Corner images -->
+      <div class="card" data-name="Styles Faded Effect Oversized T-Shirt" data-price="1499">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/OffWhiteKnitDoubleTexturedPoloT-shirt_4_770x_crop_center.jpg?v=1765172196" alt="Styles Faded Effect Oversized T-Shirt">
+        <h3>Off White Knit Double Textured Polo T-shirt</h3>
+        <p>₹1,499</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="Red Crop Zipper Hoodie" data-price="1899">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/Grind_Dept._Oversized_T-shirt2_770x_crop_center.jpg?v=1759209051" alt="Red Crop Zipper Hoodie">
+        <h3>Grind Dept. Oversized T-shirt</h3>
+        <p>₹1,899</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="Ebony Utility Straight Fit Pants" data-price="2099">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/BonkersCorner13-11-20250507_770x_crop_center.jpg?v=1764402336" alt="Ebony Utility Straight Fit Pants">
+        <h3>Blue and White Stripe Shirt</h3>
+        <p>₹2,099</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="Green Bralette Crop Top" data-price="1299">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/Classic_Eeyore_Cami_Top_1_770x_crop_center.jpg?v=1764403606" alt="Green Bralette Crop Top">
+        <h3>Classic Eeyore Cami Top</h3>
+        <p>₹1,299</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+      <div class="card" data-name="Green Bralette Crop Top" data-price="1299">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/BakiChallengeVestTank_10_770x_crop_center.jpg?v=1764409771" alt="Green Bralette Crop Top">
+        <h3>Baki Challenge Vest Tank</h3>
+        <p>₹1,299</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+      <div class="card" data-name="Green Bralette Crop Top" data-price="1299">
+        <img src="https://www.bonkerscorner.com/cdn/shop/files/Bonkerscorner__Bugs__Funky__Varsity__Jacket_11_770x_crop_center.jpg?v=1734589450" alt="Green Bralette Crop Top">
+        <h3>Bugs Funky Varsity Jacket</h3>
+        <p>₹6,299</p>
+        <div class="card-actions">
+          <span class="add-count">Added: <span class="item-count">0</span></span>
+          <button class="btn-main add-btn">Add to Cart</button>
+          <button class="btn-outline buy-btn">Buy Now</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <h2>Our Philosophy</h2>
+    <div class="about">
+      <p>
+        Maison Alder is built on the principles of restraint, craftsmanship,
+        and timeless elegance. We believe true luxury speaks softly — through
+        fabric, fit, and intention.
+      </p>
+    </div>
+  </section>
+
+  <section class="section payment" id="pay">
+    <h2>Checkout</h2>
+    <p id="total">Total: ₹0</p>
+
+    <div class="payment-layout">
+      <div class="qr-box hidden" id="qrBox">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=Maison%20Alder%20Demo" alt="Sample QR Code for payment">
+      </div>
+      <button id="checkoutBtn">Proceed to Payment</button>
+    </div>
+  </section>
+
+  <section class="cart-summary">
+    <div class="cart-summary-inner">
+      <h3>My Cart</h3>
+      <p>Items in cart: <span id="summaryCartCount">0</span></p>
+      <p>Total amount: <span id="summaryTotal">₹0</span></p>
+      <button class="btn-main" id="summaryBuyBtn" style="max-width: 240px; margin-top: 10px;">
+        Buy Now
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Maison Alder. All rights reserved.
+  </footer>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    let cartTotal = 0;
+    let globalCount = 0;
+
+    const totalEl = document.getElementById('total');
+    const globalCountEl = document.getElementById('globalCartCount');
+    const summaryCartCountEl = document.getElementById('summaryCartCount');
+    const summaryTotalEl = document.getElementById('summaryTotal');
+    const summaryBuyBtn = document.getElementById('summaryBuyBtn');
+    const toastContainer = document.getElementById('toastContainer');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const qrBox = document.getElementById('qrBox');
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.textContent = message;
+      toastContainer.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.add('show');
+      });
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 2200);
+    }
+
+    function showQR() {
+      qrBox.classList.remove('hidden');
+    }
+
+    function updateTotals() {
+      totalEl.textContent = 'Total: ₹' + cartTotal;
+      globalCountEl.textContent = globalCount;
+      summaryCartCountEl.textContent = globalCount;
+      summaryTotalEl.textContent = '₹' + cartTotal;
+    }
+
+    document.querySelectorAll('.card').forEach(card => {
+      const price = Number(card.dataset.price);
+      const name = card.dataset.name;
+      const addBtn = card.querySelector('.add-btn');
+      const buyBtn = card.querySelector('.buy-btn');
+      const itemCountEl = card.querySelector('.item-count');
+
+      let itemCount = 0;
+
+      addBtn.addEventListener('click', () => {
+        itemCount += 1;
+        globalCount += 1;
+        cartTotal += price;
+        itemCountEl.textContent = itemCount;
+        updateTotals();
+        showQR();
+        showToast(name + ' added to cart');
+      });
+
+      buyBtn.addEventListener('click', () => {
+        cartTotal += price;
+        globalCount += 1;
+        itemCount += 1;
+        itemCountEl.textContent = itemCount;
+        updateTotals();
+        showQR();
+        showToast('Proceed to payment for ' + name + ' (demo)');
+      });
+    });
+
+    function handleCheckoutClick() {
+      if (cartTotal === 0) {
+        showToast('Your cart is empty');
+        return;
+      }
+      showQR();
+      showToast('Payment integration placeholder. Use Razorpay / UPI with this QR in real site.');
+    }
+
+    checkoutBtn.addEventListener('click', handleCheckoutClick);
+    summaryBuyBtn.addEventListener('click', handleCheckoutClick);
+  </script>
+
+</body>
+</html>
